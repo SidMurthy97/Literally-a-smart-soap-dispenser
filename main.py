@@ -2,24 +2,35 @@ from gtts import gTTS
 import os 
 from bs4 import BeautifulSoup as soup
 import requests
+import random
 
-def text_to_speech():
-    test_text = 'Hi, this is Anakin Skywalker and I want to let you know, Dishita Murthy, that you suck at Zelda'
+def text_to_speech(fact):
+    
+    fact = "Hello! Did you know? " + fact + "Thanks for listening, have a great day!"
+    
     language = 'en' 
 
-    tts = gTTS(text=test_text,lang=language)
+    tts = gTTS(text=fact,lang=language)
 
-    tts.save("test.mp3")
-    os.system("test.mp3")
+    tts.save("fact.mp3")
+    os.system("fact.mp3")
 
-
-if __name__ == '__main__':
+def get_fact():
+    fact_length = 0
     
     page = requests.get("https://www.thefactsite.com/1000-interesting-facts/")
     Soup = soup(page.content, 'html.parser')
-    print(len(Soup.find_all('p')))
+
+    while fact_length < 150:
+        random_index = random.randint(7,116)
+        fact = Soup.find_all('p')[random_index].get_text()
+        fact_length = len(fact)
+
+    print(fact)
+    return fact
+
+if __name__ == '__main__':
     
-    for i in range(len(Soup.find_all('p'))):
-        print(i, Soup.find_all('p')[i].get_text())
-    
-    #print(soup.prettify())
+
+    fact = get_fact()
+    text_to_speech(fact)
