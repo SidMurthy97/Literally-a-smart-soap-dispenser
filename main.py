@@ -37,11 +37,11 @@ def run_servo(servo):
 
     while duty <= 12:
         servo.ChangeDutyCycle(duty)
-        time.sleep(0.1)
+        time.sleep(0.03)
         duty = duty + 0.5
     while duty >= 2:
         servo.ChangeDutyCycle(duty)
-        time.sleep(0.1)
+        time.sleep(0.03)
         duty = duty - 0.5
     
     servo.stop()
