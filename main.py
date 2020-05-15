@@ -30,6 +30,22 @@ def get_fact():
 
     print(fact)
     return fact
+def run_servo(servo):
+    
+    servo.start(0)
+    duty = 2
+
+    while duty <= 12:
+        servo.ChangeDutyCycle(duty)
+        time.sleep(0.1)
+        duty = duty + 0.5
+    while duty >= 2:
+        servo.ChangeDutyCycle(duty)
+        time.sleep(0.1)
+        duty = duty - 0.5
+    
+    servo.stop()
+
 
 if __name__ == '__main__':
     
@@ -37,16 +53,8 @@ if __name__ == '__main__':
     GPIO.setup(11,GPIO.OUT)
 
     servo = GPIO.PWM(11,50)
-    servo.start(0)
-    time.sleep(1)
-    servo.ChangeDutyCycle(12)
+    
+    fact = get_fact()
+    text_to_speech(fact)
+    run_servo(servo)
 
-    duty = 2
-
-    while duty <= 12:
-        servo.ChangeDutyCycle(duty)
-        time.sleep(0.05)
-        duty = duty + 1
-
-#    fact = get_fact()
- #   text_to_speech(fact)
