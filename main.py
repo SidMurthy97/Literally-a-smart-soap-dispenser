@@ -5,6 +5,7 @@ import requests
 import random
 import RPi.GPIO as GPIO
 import time
+import pygame
 
 def text_to_speech(fact):
     
@@ -15,7 +16,10 @@ def text_to_speech(fact):
     tts = gTTS(text=fact,lang=language)
 
     tts.save("fact.mp3")
-    os.system("mpg321 fact.mp3")
+    #os.system("mpg321 fact.mp3")
+    pygame.mixer.init()
+    pygame.mixer.music.load("fact.mp3")
+    pygame.mixer.music.play()
 
 def get_fact():
     fact_length = 0
@@ -53,6 +57,7 @@ if __name__ == '__main__':
     GPIO.setup(11,GPIO.OUT)
 
     servo = GPIO.PWM(11,50)
+    
     
     fact = get_fact()
     text_to_speech(fact)
