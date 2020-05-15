@@ -13,7 +13,7 @@ def text_to_speech(fact):
     tts = gTTS(text=fact,lang=language)
 
     tts.save("fact.mp3")
-    os.system("fact.mp3")
+    os.system("mpg321 fact.mp3")
 
 def get_fact():
     fact_length = 0
