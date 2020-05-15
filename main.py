@@ -3,6 +3,8 @@ import os
 from bs4 import BeautifulSoup as soup
 import requests
 import random
+import RPi.GPIO as GPIO
+import time
 
 def text_to_speech(fact):
     
@@ -31,6 +33,20 @@ def get_fact():
 
 if __name__ == '__main__':
     
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(11,GPIO.OUT)
 
-    fact = get_fact()
-    text_to_speech(fact)
+    servo = GPIO.PWM(11,50)
+    servo.start(0)
+    time.sleep(1)
+    servo.ChangeDutyCycle(12)
+
+    duty = 2
+
+    while duty <= 12:
+        servo.ChangeDutyCycle(duty)
+        time.sleep(0.05)
+        duty = duty + 1
+
+#    fact = get_fact()
+ #   text_to_speech(fact)
